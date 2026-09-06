@@ -1,0 +1,54 @@
+# Full local system (doc 01 §5): api + postgres/pgvector + redis + languagetool.
+# Usage: make up  (from repo root)
+name: thesisguard
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: thesis
+      POSTGRES_PASSWORD: thesis
+      POSTGRES_DB: thesisguard
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U thesis"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  languagetool:
+    image: erikvl87/languagetool:latest
+    ports:
+      - "8010:8010"
+    environment:
+      langtool_languageModel: /ngrams  # ngrams optional; runs without
+      Java_Xmx: 1g
+
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.api
+    environment:
+      APP_PROFILE: full
+      DATABASE_URL: postgresql+psycopg://thesis:thesis@db:5432/thesisguard
+      REDIS_URL: redis://redis:6379/0
+      LANGUAGETOOL_URL: http://languagetool:8010
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+volumes:
+  pgdata:

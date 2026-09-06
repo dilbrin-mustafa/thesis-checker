@@ -1,0 +1,17 @@
+# Full-profile API image. HF demo image lives in deploy/hf-space/ (Phase 6).
+FROM python:3.12-slim
+
+RUN useradd -m -u 1000 user
+RUN apt-get update && apt-get install -y --no-install-recommends libmagic1 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /home/user/app
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+
+COPY --chown=user pyproject.toml README.md ./
+COPY --chown=user backend/ ./backend/
+RUN pip install --no-cache-dir -e ".[dev]" && pip cache purge
+
+USER user
+EXPOSE 8000
+CMD ["uvicorn", "app.main:app", "--app-dir", "backend", "--host", "0.0.0.0", "--port", "8000"]
