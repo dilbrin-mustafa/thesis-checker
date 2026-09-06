@@ -1,0 +1,1107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ThesisGuard DocumentIR",
+  "ir": {
+    "$defs": {
+      "Block": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "heading",
+              "paragraph",
+              "caption",
+              "list_item",
+              "table",
+              "figure",
+              "equation",
+              "code",
+              "footnote",
+              "bibitem",
+              "quote"
+            ],
+            "title": "Type",
+            "type": "string"
+          },
+          "level": {
+            "anyOf": [
+              {
+                "maximum": 6,
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Level"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "span": {
+            "$ref": "#/$defs/Span"
+          },
+          "locator": {
+            "$ref": "#/$defs/Locator"
+          },
+          "style": {
+            "$ref": "#/$defs/BlockStyle"
+          },
+          "flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Flags",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "text",
+          "span"
+        ],
+        "title": "Block",
+        "type": "object"
+      },
+      "BlockStyle": {
+        "properties": {
+          "font": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Font"
+          },
+          "size_pt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Size Pt"
+          },
+          "bold": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bold"
+          },
+          "italic": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Italic"
+          },
+          "line_spacing": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Line Spacing"
+          },
+          "align": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Align"
+          },
+          "indent_cm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Indent Cm"
+          },
+          "space_before_pt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Space Before Pt"
+          }
+        },
+        "title": "BlockStyle",
+        "type": "object"
+      },
+      "Citation": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "raw": {
+            "title": "Raw",
+            "type": "string"
+          },
+          "style": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Style"
+          },
+          "block_id": {
+            "title": "Block Id",
+            "type": "string"
+          },
+          "span": {
+            "$ref": "#/$defs/Span"
+          },
+          "ref_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ref Id"
+          }
+        },
+        "required": [
+          "id",
+          "raw",
+          "block_id",
+          "span"
+        ],
+        "title": "Citation",
+        "type": "object"
+      },
+      "Equation": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Number"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "Equation",
+        "type": "object"
+      },
+      "Exclusion": {
+        "properties": {
+          "start": {
+            "minimum": 0,
+            "title": "Start",
+            "type": "integer"
+          },
+          "end": {
+            "minimum": 0,
+            "title": "End",
+            "type": "integer"
+          },
+          "reason": {
+            "enum": [
+              "front_matter",
+              "toc",
+              "bibliography",
+              "appendix",
+              "code",
+              "quote",
+              "other"
+            ],
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "reason"
+        ],
+        "title": "Exclusion",
+        "type": "object"
+      },
+      "Figure": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Number"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Caption"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          },
+          "referenced_by": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Referenced By",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "Figure",
+        "type": "object"
+      },
+      "Language": {
+        "properties": {
+          "primary": {
+            "pattern": "^[a-z]{2}$",
+            "title": "Primary",
+            "type": "string"
+          },
+          "per_section": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Per Section",
+            "type": "object"
+          }
+        },
+        "required": [
+          "primary"
+        ],
+        "title": "Language",
+        "type": "object"
+      },
+      "Layout": {
+        "properties": {
+          "margins_cm": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Margins Cm",
+            "type": "object"
+          },
+          "page_size": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page Size"
+          },
+          "numbering_starts_at": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Numbering Starts At"
+          }
+        },
+        "title": "Layout",
+        "type": "object"
+      },
+      "Locator": {
+        "description": "Source locator for highlighting: page+bbox (PDF), xml path (DOCX), line (LaTeX).",
+        "properties": {
+          "page": {
+            "anyOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bbox"
+          },
+          "xml_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Xml Path"
+          },
+          "line": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Line"
+          }
+        },
+        "title": "Locator",
+        "type": "object"
+      },
+      "ParsedReference": {
+        "properties": {
+          "authors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Authors",
+            "type": "array"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Title"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Year"
+          },
+          "venue": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Venue"
+          },
+          "doi": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Doi"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Url"
+          }
+        },
+        "title": "ParsedReference",
+        "type": "object"
+      },
+      "Reference": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "raw": {
+            "title": "Raw",
+            "type": "string"
+          },
+          "parsed": {
+            "$ref": "#/$defs/ParsedReference"
+          },
+          "confidence": {
+            "default": 0.0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "raw"
+        ],
+        "title": "Reference",
+        "type": "object"
+      },
+      "Section": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "title_page",
+              "statement",
+              "abstract_pl",
+              "abstract_en",
+              "toc",
+              "introduction",
+              "literature_review",
+              "methodology",
+              "results",
+              "summary",
+              "bibliography",
+              "appendix",
+              "other"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "block_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Block Ids",
+            "type": "array"
+          },
+          "page_range": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page Range"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "block_ids"
+        ],
+        "title": "Section",
+        "type": "object"
+      },
+      "Source": {
+        "properties": {
+          "format": {
+            "enum": [
+              "docx",
+              "pdf",
+              "latex"
+            ],
+            "title": "Format",
+            "type": "string"
+          },
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Sha256",
+            "type": "string"
+          },
+          "pages": {
+            "minimum": 0,
+            "title": "Pages",
+            "type": "integer"
+          },
+          "words": {
+            "minimum": 0,
+            "title": "Words",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "format",
+          "filename",
+          "sha256",
+          "pages",
+          "words"
+        ],
+        "title": "Source",
+        "type": "object"
+      },
+      "Span": {
+        "properties": {
+          "start": {
+            "minimum": 0,
+            "title": "Start",
+            "type": "integer"
+          },
+          "end": {
+            "minimum": 0,
+            "title": "End",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "title": "Span",
+        "type": "object"
+      },
+      "Table": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Number"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Caption"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          },
+          "referenced_by": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Referenced By",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "Table",
+        "type": "object"
+      }
+    },
+    "description": "Frozen contract v1.0 — parsers produce it, analysers consume it.",
+    "properties": {
+      "schema_version": {
+        "const": "1.0",
+        "default": "1.0",
+        "title": "Schema Version",
+        "type": "string"
+      },
+      "doc_id": {
+        "title": "Doc Id",
+        "type": "string"
+      },
+      "source": {
+        "$ref": "#/$defs/Source"
+      },
+      "language": {
+        "$ref": "#/$defs/Language"
+      },
+      "plain_text": {
+        "title": "Plain Text",
+        "type": "string"
+      },
+      "blocks": {
+        "items": {
+          "$ref": "#/$defs/Block"
+        },
+        "title": "Blocks",
+        "type": "array"
+      },
+      "sections": {
+        "items": {
+          "$ref": "#/$defs/Section"
+        },
+        "title": "Sections",
+        "type": "array"
+      },
+      "citations": {
+        "items": {
+          "$ref": "#/$defs/Citation"
+        },
+        "title": "Citations",
+        "type": "array"
+      },
+      "references": {
+        "items": {
+          "$ref": "#/$defs/Reference"
+        },
+        "title": "References",
+        "type": "array"
+      },
+      "figures": {
+        "items": {
+          "$ref": "#/$defs/Figure"
+        },
+        "title": "Figures",
+        "type": "array"
+      },
+      "tables": {
+        "items": {
+          "$ref": "#/$defs/Table"
+        },
+        "title": "Tables",
+        "type": "array"
+      },
+      "equations": {
+        "items": {
+          "$ref": "#/$defs/Equation"
+        },
+        "title": "Equations",
+        "type": "array"
+      },
+      "layout": {
+        "$ref": "#/$defs/Layout"
+      },
+      "exclusion_mask": {
+        "items": {
+          "$ref": "#/$defs/Exclusion"
+        },
+        "title": "Exclusion Mask",
+        "type": "array"
+      },
+      "extra": {
+        "additionalProperties": true,
+        "title": "Extra",
+        "type": "object"
+      }
+    },
+    "required": [
+      "doc_id",
+      "source",
+      "language",
+      "plain_text",
+      "blocks"
+    ],
+    "title": "DocumentIR",
+    "type": "object"
+  },
+  "finding": {
+    "$defs": {
+      "FindingLocation": {
+        "properties": {
+          "block_id": {
+            "title": "Block Id",
+            "type": "string"
+          },
+          "span": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Span"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "locator": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Locator"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "block_id"
+        ],
+        "title": "FindingLocation",
+        "type": "object"
+      },
+      "Locator": {
+        "description": "Source locator for highlighting: page+bbox (PDF), xml path (DOCX), line (LaTeX).",
+        "properties": {
+          "page": {
+            "anyOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bbox"
+          },
+          "xml_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Xml Path"
+          },
+          "line": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Line"
+          }
+        },
+        "title": "Locator",
+        "type": "object"
+      },
+      "Span": {
+        "properties": {
+          "start": {
+            "minimum": 0,
+            "title": "Start",
+            "type": "integer"
+          },
+          "end": {
+            "minimum": 0,
+            "title": "End",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "title": "Span",
+        "type": "object"
+      },
+      "SuggestedFix": {
+        "properties": {
+          "type": {
+            "default": "manual",
+            "enum": [
+              "replace",
+              "manual"
+            ],
+            "title": "Type",
+            "type": "string"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Text"
+          }
+        },
+        "title": "SuggestedFix",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "id": {
+        "title": "Id",
+        "type": "string"
+      },
+      "module": {
+        "enum": [
+          "format",
+          "grammar",
+          "similarity",
+          "aigt",
+          "citation"
+        ],
+        "title": "Module",
+        "type": "string"
+      },
+      "rule_id": {
+        "title": "Rule Id",
+        "type": "string"
+      },
+      "severity": {
+        "enum": [
+          "blocker",
+          "error",
+          "warning",
+          "info"
+        ],
+        "title": "Severity",
+        "type": "string"
+      },
+      "confidence": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "title": "Confidence",
+        "type": "number"
+      },
+      "title_pl": {
+        "title": "Title Pl",
+        "type": "string"
+      },
+      "title_en": {
+        "title": "Title En",
+        "type": "string"
+      },
+      "detail_pl": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detail Pl"
+      },
+      "detail_en": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detail En"
+      },
+      "locations": {
+        "items": {
+          "$ref": "#/$defs/FindingLocation"
+        },
+        "title": "Locations",
+        "type": "array"
+      },
+      "evidence": {
+        "additionalProperties": true,
+        "title": "Evidence",
+        "type": "object"
+      },
+      "suggested_fix": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/SuggestedFix"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "docs_url": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Docs Url"
+      }
+    },
+    "required": [
+      "id",
+      "module",
+      "rule_id",
+      "severity",
+      "confidence",
+      "title_pl",
+      "title_en"
+    ],
+    "title": "Finding",
+    "type": "object"
+  }
+}

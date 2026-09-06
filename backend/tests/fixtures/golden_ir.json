@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "doc_id": "00000000-0000-0000-0000-000000000001",
+  "source": {
+    "format": "docx",
+    "filename": "thesis.docx",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "pages": 4,
+    "words": 9
+  },
+  "language": {
+    "primary": "pl",
+    "per_section": {
+      "s02": "en"
+    }
+  },
+  "plain_text": "Wstęp\nTo jest akapit testowy.\nAbstract\nThis is a test paragraph.",
+  "blocks": [
+    {
+      "id": "b0001",
+      "type": "heading",
+      "level": 1,
+      "text": "Wstęp",
+      "span": { "start": 0, "end": 5 },
+      "locator": { "page": 1, "bbox": null, "xml_path": "/w:document/w:body/w:p[1]", "line": null },
+      "style": { "font": "Times New Roman", "size_pt": 16.0, "bold": true },
+      "flags": []
+    },
+    {
+      "id": "b0002",
+      "type": "paragraph",
+      "level": null,
+      "text": "To jest akapit testowy.",
+      "span": { "start": 6, "end": 29 },
+      "locator": { "page": 1 },
+      "style": { "font": "Times New Roman", "size_pt": 12.0, "line_spacing": 1.5, "indent_cm": 1.25 },
+      "flags": []
+    },
+    {
+      "id": "b0003",
+      "type": "heading",
+      "level": 1,
+      "text": "Abstract",
+      "span": { "start": 30, "end": 38 },
+      "locator": { "page": 2 },
+      "style": { "font": "Times New Roman", "size_pt": 16.0, "bold": true },
+      "flags": []
+    },
+    {
+      "id": "b0004",
+      "type": "paragraph",
+      "level": null,
+      "text": "This is a test paragraph.",
+      "span": { "start": 39, "end": 64 },
+      "locator": { "page": 2 },
+      "style": { "font": "Times New Roman", "size_pt": 12.0, "line_spacing": 1.5 },
+      "flags": []
+    }
+  ],
+  "sections": [
+    { "id": "s01", "kind": "introduction", "title": "Wstęp", "block_ids": ["b0001", "b0002"], "page_range": [1, 1] },
+    { "id": "s02", "kind": "abstract_en", "title": "Abstract", "block_ids": ["b0003", "b0004"], "page_range": [2, 2] }
+  ],
+  "citations": [],
+  "references": [],
+  "figures": [],
+  "tables": [],
+  "equations": [],
+  "layout": {
+    "margins_cm": { "top": 2.5, "bottom": 2.5, "inner": 3.5, "outer": 2.0 },
+    "page_size": "A4",
+    "numbering_starts_at": 4
+  },
+  "exclusion_mask": [
+    { "start": 30, "end": 64, "reason": "front_matter" }
+  ]
+}

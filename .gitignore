@@ -1,0 +1,46 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# env & secrets — never commit
+.env
+.env.*
+*.pem
+*.key
+secrets/
+
+# local data (theses are confidential — never commit real documents)
+data/
+uploads/
+*.pdf
+*.docx
+!backend/tests/fixtures/**
+
+# research corpus may contain copyrighted / personal data
+research/corpus/documents/
+!research/corpus/documents/.gitkeep
+
+node_modules/
+frontend/dist/
+
+# sqlite / local stores
+*.sqlite
+*.sqlite-journal
+
+# OS
+.DS_Store
+Thumbs.db
+
+# HF cache
+.cache/
