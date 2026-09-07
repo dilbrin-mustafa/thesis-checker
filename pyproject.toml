@@ -24,6 +24,7 @@ dev = [
   "ruff>=0.6",
   "mypy>=1.10",
   "types-pyyaml>=6.0",
+  "types-defusedxml>=0.7",
 ]
 ingestion-docx = ["python-docx>=1.1", "lxml>=5.0"]
 ingestion-pdf = ["pymupdf>=1.24", "pdfplumber>=0.11", "pypdf>=4.0"]
@@ -47,6 +48,12 @@ src = ["backend"]
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 
+[tool.ruff.lint.per-file-ignores]
+# Ingestion lexicons and regexes are *about* Polish typography: en dashes in
+# citation ranges, „quotes”, półpauza. RUF001 flags exactly the characters the
+# domain requires, so it is disabled for this package only.
+"backend/app/ingestion/*" = ["RUF001"]
+
 [tool.mypy]
 python_version = "3.11"
 strict = true
@@ -54,8 +61,25 @@ show_error_codes = true
 explicit_package_bases = true
 mypy_path = "backend"
 [[tool.mypy.overrides]]
-module = "tests.*"
+module = ["tests.*", "app.ingestion.pdf_parser", "app.ingestion.guards"]
+# PyMuPDF and python-docx expose untyped functions; strict's
+# disallow_untyped_calls would fire on every legitimate call into them.
 disallow_untyped_defs = false
+disallow_untyped_calls = false
+
+# Document-parsing libraries ship partial or no annotations. Their calls return
+# Any rather than being followed: `follow_untyped_imports` would trip
+# `disallow_untyped_calls` (on under strict) on every legitimate call site.
+[[tool.mypy.overrides]]
+module = [
+  "pymupdf.*",
+  "bibtexparser.*",
+  "docx.*",
+  "pylatexenc.*",
+  "lingua.*",
+  "pdfplumber.*",
+]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]
