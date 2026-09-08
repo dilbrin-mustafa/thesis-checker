@@ -18,6 +18,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+  "thesisguard[ingestion]",
   "pytest>=8.0",
   "pytest-asyncio>=0.23",
   "httpx>=0.27",
@@ -30,6 +31,11 @@ ingestion-docx = ["python-docx>=1.1", "lxml>=5.0"]
 ingestion-pdf = ["pymupdf>=1.24", "pdfplumber>=0.11", "pypdf>=4.0"]
 ingestion-latex = ["pylatexenc>=2.10", "bibtexparser>=1.4"]
 nlp = ["lingua-language-detector>=2.0"]
+# Every parser the test suite imports. `dev` pulls this in so that
+# `pip install -e ".[dev]"` (CI, `make install`) yields a working suite.
+ingestion = [
+  "thesisguard[ingestion-docx,ingestion-pdf,ingestion-latex,nlp]",
+]
 similarity = ["datasketch>=1.6", "sentence-transformers>=3.0", "numpy>=1.26"]
 api = ["sqlalchemy>=2.0", "alembic>=1.13"]
 
