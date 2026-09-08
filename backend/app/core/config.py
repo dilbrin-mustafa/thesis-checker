@@ -32,6 +32,15 @@ class Settings(BaseSettings):
     total_timeout_s: int = 1200
     external_queries_per_doc: int = 200
 
+    # Container / archive guardrails (doc 02 §3, format-specific hardening)
+    max_zip_members: int = 2_000
+    max_uncompressed_mb: int = 500
+    max_compression_ratio: int = 100
+    max_latex_files: int = 200
+    max_latex_include_depth: int = 8
+    parse_memory_mb: int = 2_048
+    parse_sandboxed: bool = True
+
     # Retention (doc 02 §4)
     blob_retention_hours: int = 24
     report_retention_days: int = 30

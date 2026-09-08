@@ -18,17 +18,24 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+  "thesisguard[ingestion]",
   "pytest>=8.0",
   "pytest-asyncio>=0.23",
   "httpx>=0.27",
   "ruff>=0.6",
   "mypy>=1.10",
   "types-pyyaml>=6.0",
+  "types-defusedxml>=0.7",
 ]
 ingestion-docx = ["python-docx>=1.1", "lxml>=5.0"]
 ingestion-pdf = ["pymupdf>=1.24", "pdfplumber>=0.11", "pypdf>=4.0"]
 ingestion-latex = ["pylatexenc>=2.10", "bibtexparser>=1.4"]
 nlp = ["lingua-language-detector>=2.0"]
+# Every parser the test suite imports. `dev` pulls this in so that
+# `pip install -e ".[dev]"` (CI, `make install`) yields a working suite.
+ingestion = [
+  "thesisguard[ingestion-docx,ingestion-pdf,ingestion-latex,nlp]",
+]
 similarity = ["datasketch>=1.6", "sentence-transformers>=3.0", "numpy>=1.26"]
 api = ["sqlalchemy>=2.0", "alembic>=1.13"]
 
@@ -47,6 +54,12 @@ src = ["backend"]
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 
+[tool.ruff.lint.per-file-ignores]
+# Ingestion lexicons and regexes are *about* Polish typography: en dashes in
+# citation ranges, „quotes”, półpauza. RUF001 flags exactly the characters the
+# domain requires, so it is disabled for this package only.
+"backend/app/ingestion/*" = ["RUF001"]
+
 [tool.mypy]
 python_version = "3.11"
 strict = true
@@ -54,8 +67,25 @@ show_error_codes = true
 explicit_package_bases = true
 mypy_path = "backend"
 [[tool.mypy.overrides]]
-module = "tests.*"
+module = ["tests.*", "app.ingestion.pdf_parser", "app.ingestion.guards"]
+# PyMuPDF and python-docx expose untyped functions; strict's
+# disallow_untyped_calls would fire on every legitimate call into them.
 disallow_untyped_defs = false
+disallow_untyped_calls = false
+
+# Document-parsing libraries ship partial or no annotations. Their calls return
+# Any rather than being followed: `follow_untyped_imports` would trip
+# `disallow_untyped_calls` (on under strict) on every legitimate call site.
+[[tool.mypy.overrides]]
+module = [
+  "pymupdf.*",
+  "bibtexparser.*",
+  "docx.*",
+  "pylatexenc.*",
+  "lingua.*",
+  "pdfplumber.*",
+]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]

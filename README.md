@@ -19,7 +19,7 @@ MSc thesis project @ Gdańsk University of Technology.
 | `docs/05-IMPLEMENTATION-PLAN.md` | Phase-by-phase execution plan (38 weeks) |
 | `docs/journal.md` | Weekly engineering log (fills the methodology chapter) |
 
-## Quickstart (Phase 0)
+## Quickstart
 
 ```bash
 make install   # create venv + install deps
@@ -28,6 +28,19 @@ make run       # run API locally (http://localhost:8000, /health, /docs)
 make fmt       # ruff format + lint
 make typecheck # mypy strict
 ```
+
+### Ingestion CLI (Phase 1)
+
+```bash
+.venv/bin/python backend/cli.py detect thesis.docx          # sniff format
+.venv/bin/python backend/cli.py parse thesis.docx --out ir.json
+.venv/bin/python backend/cli.py evaluate-ingestion \
+    --corpus data/synthetic-corpus --out-json research/results/ingestion.json
+```
+
+`parse` runs inside the sandbox by default (separate process, rlimits, no
+network). Pass `--no-sandbox` only for debugging. Measured ingestion numbers
+live in [`research/results/ingestion.md`](research/results/ingestion.md).
 
 Full stack (requires Docker):
 
@@ -60,7 +73,10 @@ One codebase, two profiles via `APP_PROFILE`:
 ## Status
 
 - [x] Phase 0 — Foundations (repo, CI, IR contract frozen)
-- [ ] Phase 1 — Ingestion (DOCX → LaTeX → PDF)
+- [x] Phase 1 — Ingestion (DOCX → LaTeX → PDF). 6-document synthetic corpus at
+  1.00 on every metric — **regression anchors, not accuracy**: no real theses
+  are available, so the PDF `F1 > 0.75` target is unverified. See
+  [`research/results/ingestion.md`](research/results/ingestion.md).
 - [ ] Phase 2 — Format + Grammar + vertical slice
 - [ ] Phase 3 — Citations
 - [ ] Phase 4 — Similarity

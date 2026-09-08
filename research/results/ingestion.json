@@ -1,0 +1,317 @@
+{
+  "generated_at": "2026-09-07T23:33:17Z",
+  "summary": {
+    "documents": 6,
+    "formats": {
+      "docx": {
+        "documents": 2,
+        "heading_f1": 1.0,
+        "heading_precision": 1.0,
+        "heading_recall": 1.0,
+        "section_f1": 1.0,
+        "citation_f1": 1.0,
+        "reference_accuracy": 1.0,
+        "language_accuracy": 1.0,
+        "mean_runtime_s": 0.214,
+        "figure_recall": 1.0,
+        "table_recall": 1.0
+      },
+      "latex": {
+        "documents": 2,
+        "heading_f1": 1.0,
+        "heading_precision": 1.0,
+        "heading_recall": 1.0,
+        "section_f1": 1.0,
+        "citation_f1": 1.0,
+        "reference_accuracy": 1.0,
+        "language_accuracy": 1.0,
+        "mean_runtime_s": 0.234,
+        "figure_recall": 1.0,
+        "table_recall": 1.0
+      },
+      "pdf": {
+        "documents": 2,
+        "heading_f1": 1.0,
+        "heading_precision": 1.0,
+        "heading_recall": 1.0,
+        "section_f1": 1.0,
+        "citation_f1": 1.0,
+        "reference_accuracy": 1.0,
+        "language_accuracy": 1.0,
+        "mean_runtime_s": 0.27,
+        "figure_recall": 1.0,
+        "table_recall": 1.0
+      }
+    }
+  },
+  "documents": [
+    {
+      "document": "article-latex",
+      "source_format": "latex",
+      "headings": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "sections": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "citations": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "references_expected": 2,
+      "references_matched": 2,
+      "figures_expected": 0,
+      "figures_found": 0,
+      "tables_expected": 0,
+      "tables_found": 0,
+      "code_blocks_expected": 0,
+      "code_blocks_found": 0,
+      "excluded_kinds_expected": [],
+      "excluded_kinds_found": [],
+      "blocks": 7,
+      "pages": 0,
+      "words": 28,
+      "language_expected": "pl",
+      "language_found": "pl",
+      "language_correct": true,
+      "runtime_s": 0.243,
+      "warnings": [],
+      "reference_accuracy": 1.0
+    },
+    {
+      "document": "manual-docx",
+      "source_format": "docx",
+      "headings": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "sections": {
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "citations": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 0
+      },
+      "references_expected": 2,
+      "references_matched": 2,
+      "figures_expected": 0,
+      "figures_found": 0,
+      "tables_expected": 0,
+      "tables_found": 0,
+      "code_blocks_expected": 0,
+      "code_blocks_found": 0,
+      "excluded_kinds_expected": [
+        "bibliography"
+      ],
+      "excluded_kinds_found": [
+        "bibliography"
+      ],
+      "blocks": 7,
+      "pages": 1,
+      "words": 53,
+      "language_expected": "pl",
+      "language_found": "pl",
+      "language_correct": true,
+      "runtime_s": 0.213,
+      "warnings": [],
+      "reference_accuracy": 1.0
+    },
+    {
+      "document": "notoc-pdf",
+      "source_format": "pdf",
+      "headings": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "sections": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "citations": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "references_expected": 1,
+      "references_matched": 1,
+      "figures_expected": 1,
+      "figures_found": 1,
+      "tables_expected": 1,
+      "tables_found": 1,
+      "code_blocks_expected": 0,
+      "code_blocks_found": 0,
+      "excluded_kinds_expected": [
+        "bibliography"
+      ],
+      "excluded_kinds_found": [
+        "bibliography"
+      ],
+      "blocks": 7,
+      "pages": 2,
+      "words": 62,
+      "language_expected": "pl",
+      "language_found": "pl",
+      "language_correct": true,
+      "runtime_s": 0.282,
+      "warnings": [],
+      "reference_accuracy": 1.0
+    },
+    {
+      "document": "report-latex",
+      "source_format": "latex",
+      "headings": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 0
+      },
+      "sections": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 0
+      },
+      "citations": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 0
+      },
+      "references_expected": 3,
+      "references_matched": 3,
+      "figures_expected": 1,
+      "figures_found": 1,
+      "tables_expected": 1,
+      "tables_found": 1,
+      "code_blocks_expected": 1,
+      "code_blocks_found": 1,
+      "excluded_kinds_expected": [
+        "bibliography",
+        "code",
+        "front_matter",
+        "quote"
+      ],
+      "excluded_kinds_found": [
+        "bibliography",
+        "code",
+        "front_matter",
+        "quote"
+      ],
+      "blocks": 21,
+      "pages": 0,
+      "words": 156,
+      "language_expected": "pl",
+      "language_found": "pl",
+      "language_correct": true,
+      "runtime_s": 0.225,
+      "warnings": [
+        "\\tableofcontents present: rendered ToC/list not represented in the IR"
+      ],
+      "reference_accuracy": 1.0
+    },
+    {
+      "document": "thesis-docx",
+      "source_format": "docx",
+      "headings": {
+        "tp": 8,
+        "fp": 0,
+        "fn": 0
+      },
+      "sections": {
+        "tp": 8,
+        "fp": 0,
+        "fn": 0
+      },
+      "citations": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 0
+      },
+      "references_expected": 3,
+      "references_matched": 3,
+      "figures_expected": 1,
+      "figures_found": 1,
+      "tables_expected": 1,
+      "tables_found": 1,
+      "code_blocks_expected": 1,
+      "code_blocks_found": 1,
+      "excluded_kinds_expected": [
+        "bibliography",
+        "code",
+        "front_matter",
+        "quote",
+        "toc"
+      ],
+      "excluded_kinds_found": [
+        "bibliography",
+        "code",
+        "front_matter",
+        "quote",
+        "toc"
+      ],
+      "blocks": 29,
+      "pages": 1,
+      "words": 209,
+      "language_expected": "pl",
+      "language_found": "pl",
+      "language_correct": true,
+      "runtime_s": 0.216,
+      "warnings": [],
+      "reference_accuracy": 1.0
+    },
+    {
+      "document": "thesis-pdf",
+      "source_format": "pdf",
+      "headings": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 0
+      },
+      "sections": {
+        "tp": 6,
+        "fp": 0,
+        "fn": 0
+      },
+      "citations": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 0
+      },
+      "references_expected": 2,
+      "references_matched": 2,
+      "figures_expected": 1,
+      "figures_found": 1,
+      "tables_expected": 1,
+      "tables_found": 1,
+      "code_blocks_expected": 0,
+      "code_blocks_found": 0,
+      "excluded_kinds_expected": [
+        "bibliography",
+        "front_matter",
+        "toc"
+      ],
+      "excluded_kinds_found": [
+        "bibliography",
+        "front_matter",
+        "toc"
+      ],
+      "blocks": 17,
+      "pages": 3,
+      "words": 123,
+      "language_expected": "pl",
+      "language_found": "pl",
+      "language_correct": true,
+      "runtime_s": 0.258,
+      "warnings": [],
+      "reference_accuracy": 1.0
+    }
+  ]
+}
